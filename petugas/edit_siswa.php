@@ -5,9 +5,10 @@
       <div class="card-body">
         <?php
         $id = $_GET['id'];
-        $siswa = $dbConnect->prepare("CALL getSiswaId('$id'); CALL getKelas()");
+        $siswa = $dbConnect->prepare("CALL getSiswaId('$id')");
         $siswa->execute();
         $data = $siswa->fetch();
+        $siswa->nextRowset();
         ?>
         <form action="../controllers/siswaController.php?aksi=ubah" method="post">
           <div class="form-group mb-2">
@@ -31,9 +32,9 @@
           <div class="form-group mb-2">
             <select name="id_kelas" class="form-control" required>
               <?php
-              $siswa->nextRowset();
-              $siswa->nextRowset();
-              $kelasData = $siswa->fetchAll();
+              $kelas = $dbConnect->prepare("CALL getKelas()");
+              $kelas->execute();
+              $kelasData = $kelas->fetchAll();
               ?>
               <?php foreach($kelasData as $kelas):  ?>
               <option value="<?= $kelas['id_kelas'] ?>" <?= $data['id_kelas'] != $kelas['id_kelas'] ?: 'selected' ?> >

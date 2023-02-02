@@ -25,7 +25,11 @@
           <div class="form-group mb-2">
             <select name="id_kelas" class="form-control" required>
               <option disabled selected>Pilih kelas</option>
-              <?php foreach($prosesData->tampilData("kelas") as $kelas):  ?>
+              <?php
+              $kelas = $dbConnect->prepare("CALL getKelas()");
+              $kelas->execute();
+              ?>
+              <?php foreach($kelas->fetchAll() as $kelas):  ?>
               <option value="<?= $kelas['id_kelas'] ?>"><?= $kelas['nama_kelas'] ?></option>
               <?php endforeach ?>
             </select>

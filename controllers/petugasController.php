@@ -1,6 +1,6 @@
 <?php
 
-require('../helper/request.php');
+require('../request.php');
 
 if (empty($sesi['level'] == 'admin')) {
   die("403 - Permission Denied");

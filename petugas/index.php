@@ -6,7 +6,7 @@ if(empty($_SESSION)){
 if (empty($_SESSION["USER"]['tipe'] == 'petugas')) {
   header('location:../login.php');
 } else {
-  require('../helper/request.php');
+  require('../request.php');
 }
 ?>
 

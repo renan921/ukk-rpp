@@ -1,6 +1,6 @@
 <?php
 
-require('../helper/request.php');
+require('../request.php');
 
 if (empty($sesi['id_petugas'])) {
   die("404 - Permission Denied");

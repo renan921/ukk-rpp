@@ -1,6 +1,6 @@
 <?php
 
-require('../helper/request.php');
+require('../request.php');
 
 // untuk login petugas
 if (!empty($_GET['aksi'] == 'loginPetugas')) {

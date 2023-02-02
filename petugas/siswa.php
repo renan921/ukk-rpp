@@ -20,12 +20,16 @@
             <th>Aksi</th>
           </thead>
           <tbody>
-            <?php foreach($prosesData->tampilData('siswa') as $no=>$data): ?>
+            <?php
+            $siswa = $dbConnect->prepare("CALL getSiswa()");
+            $siswa->execute();
+            ?>
+            <?php foreach($siswa->fetchAll() as $no=>$data): ?>
               <tr>
                 <td><?= $data['nisn'] ?></td>
                 <td><?= $data['nis'] ?></td>
                 <td><?= $data['nama'] ?></td>
-                <td><?= $prosesData->tampilDataId('kelas', 'id_kelas', $data['id_kelas'])['nama_kelas'] ?></td>
+                <td><?= $data['nama_kelas'] ?></td>
                 <td><?= $data['alamat'] ?></td>
                 <td><?= $data['no_telp'] ?></td>
                 <td>

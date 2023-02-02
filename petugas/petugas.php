@@ -18,7 +18,11 @@
             <th>Aksi</th>
           </thead>
           <tbody>
-            <?php foreach($prosesData->tampilData('petugas') as $no=>$data): ?>
+            <?php
+            $petugas = $dbConnect->prepare("CALL getPetugas()");
+            $petugas->execute();
+            ?>
+            <?php foreach($petugas->fetchAll() as $no=>$data): ?>
               <tr>
                 <td><?= $no+1 ?></td>
                 <td><?= $data['nama_petugas'] ?></td>

@@ -8,16 +8,16 @@ if (empty($sesi['id_petugas'])) {
 
 // untuk menambah data
 if (!empty($_GET['aksi'] == 'tambah')) {
-  $data = array(
-    'id_petugas' => $sesi['id_petugas'],
-    'nisn' => $_POST['nisn'],
-    'id_spp' => $_POST['id_spp'],
-    'tgl_bayar' => $_POST['tgl_bayar'],
-    'bulan_bayar' => $_POST['bulan_bayar'],
-    'tahun_dibayar' => $_POST['tahun_dibayar'],
-    'jumlah_bayar' => $_POST['jumlah_bayar'],
-  );
-  $tambah = $prosesData->tambahData("pembayaran", $data);
+  $id_petugas = $sesi['id_petugas'];
+  $nisn = $_POST['nisn'];
+  $id_spp = $_POST['id_spp'];
+  $tgl_bayar = $_POST['tgl_bayar'];
+  $bulan_bayar = $_POST['bulan_bayar'];
+  $tahun_dibayar = $_POST['tahun_dibayar'];
+  $jumlah_bayar = $_POST['jumlah_bayar'];
+
+  $tambah = $dbConnect->prepare("CALL tambahPembayaran('$id_petugas', '$nisn', '$id_spp', '$tgl_bayar', '$bulan_bayar', '$tahun_dibayar', '$jumlah_bayar')");
+  $tambah->execute();
   if ($tambah) {
     echo "<script>alert('Berhasil! Transaksi Ditambahkan'); window.location='../petugas?page=entri_transaksi'</script>";
   } else {

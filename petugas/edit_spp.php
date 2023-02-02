@@ -4,7 +4,10 @@
     <div class="card">
       <div class="card-body">
         <?php
-        $data = $prosesData->tampilDataId('spp', 'id_spp', $_GET['id']);
+        $id = $_GET['id'];
+        $spp = $dbConnect->prepare("CALL getSppId($id)");
+        $spp->execute();
+        $data = $spp->fetch();
         ?>
         <form action="../controllers/sppController.php?aksi=ubah" method="post">
           <input type="hidden" name="id" value="<?= $data['id_spp'] ?>">

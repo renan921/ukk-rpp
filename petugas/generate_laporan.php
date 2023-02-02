@@ -32,20 +32,19 @@ include('../helper/request.php');
             <th>Jumlah Bayar</th>
           </thead>
           <tbody>
-            <?php foreach($prosesData->tampilData('pembayaran') as $no=>$data): ?>
             <?php
-              $siswa = $prosesData->tampilDataId('siswa', 'nisn', $data['nisn']);
-              $petugas = $prosesData->tampilDataId('petugas', 'id_petugas', $data['id_petugas']);
-              $spp = $prosesData->tampilDataId('spp', 'id_spp', $data['id_spp']);
+            $pembayaran = $dbConnect->prepare("CALL getPembayaran()");
+            $pembayaran->execute();
             ?>
+            <?php foreach($pembayaran->fetchAll() as $no=>$data): ?>
               <tr>
                 <td><?= $no+1 ?></td>
-                <td><?= $petugas['nama_petugas'] ?></td>
-                <td><?= $siswa['nama'] ?></td>
+                <td><?= $data['nama_petugas'] ?></td>
+                <td><?= $data['nama'] ?></td>
                 <td><?= $data['tgl_bayar'] ?></td>
                 <td><?= $data['bulan_bayar'] ?></td>
                 <td><?= $data['tahun_dibayar'] ?></td>
-                <td><?= $spp['tahun'].'- Rp.'.$spp['nominal'] ?></td>
+                <td><?= $data['tahun'].'- Rp.'.$data['nominal'] ?></td>
                 <td><?= $data['jumlah_bayar'] ?></td>
               </tr>
             <?php endforeach ?>

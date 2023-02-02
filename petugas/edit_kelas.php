@@ -4,7 +4,10 @@
     <div class="card">
       <div class="card-body">
         <?php
-        $data = $prosesData->tampilDataId('kelas', 'id_kelas', $_GET['id']);
+        $id = $_GET['id'];
+        $kelas = $dbConnect->prepare("CALL getKelasId($id)");
+        $kelas->execute();
+        $data = $kelas->fetch();
         ?>
         <form action="../controllers/kelasController.php?aksi=ubah" method="post">
           <input type="hidden" name="id" value="<?= $data['id_kelas'] ?>">

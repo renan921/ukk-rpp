@@ -8,12 +8,10 @@ if (empty($sesi['level'] == 'admin')) {
 
 // untuk menambah data
 if (!empty($_GET['aksi'] == 'tambah')) {
-  $data = array(
-    'nama_kelas' => $_POST['nama_kelas'],
-    'kompetensi_keahlian' => $_POST['kompetensi_keahlian']
-  );
-
-  $tambah = $prosesData->tambahData("kelas", $data);
+  $namaKelas = $_POST['nama_kelas'];
+  $kompetensi = $_POST['kompetensi_keahlian'];
+  $tambah = $dbConnect->prepare("CALL tambahKelas('$namaKelas', '$kompetensi')");
+  $tambah->execute();
   if ($tambah) {
     header('location:../petugas?page=kelas');
   } else {
@@ -24,7 +22,8 @@ if (!empty($_GET['aksi'] == 'tambah')) {
 //hapus data
 if (!empty($_GET['aksi'] == 'delete')) {
   $id = $_POST['id'];
-  $hapus = $prosesData->hapusData("kelas", "id_kelas", $id);
+  $hapus = $dbConnect->prepare("CALL hapusKelas($id)");
+  $hapus->execute();
   if ($hapus) {
     header('location:../petugas?page=kelas');
   } else {
@@ -34,13 +33,12 @@ if (!empty($_GET['aksi'] == 'delete')) {
 
 // untuk mengubah data
 if (!empty($_GET['aksi'] == 'ubah')) {
-  $data = array(
-    'nama_kelas' => $_POST['nama_kelas'],
-    'kompetensi_keahlian' => $_POST['kompetensi_keahlian']
-  );
-
-  $tambah = $prosesData->ubahData("kelas", $data, "id_kelas", $_POST['id']);
-  if ($tambah) {
+  $id = $_POST['id'];
+  $namaKelas = $_POST['nama_kelas'];
+  $kompetensi = $_POST['kompetensi_keahlian'];
+  $update = $dbConnect->prepare("CALL updateKelas($id, '$namaKelas', '$kompetensi')");
+  $update->execute();
+  if ($update) {
     header('location:../petugas?page=kelas');
   } else {
     echo "Gagal ubah data";

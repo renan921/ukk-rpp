@@ -8,12 +8,11 @@ if (empty($sesi['level'] == 'admin')) {
 
 // untuk menambah data
 if (!empty($_GET['aksi'] == 'tambah')) {
-  $data = array(
-    'tahun' => $_POST['tahun'],
-    'nominal' => $_POST['nominal']
-  );
+  $tahun = $_POST['tahun'];
+  $nominal = $_POST['nominal'];
 
-  $tambah = $prosesData->tambahData("spp", $data);
+  $tambah = $dbConnect->prepare("CALL tambahSpp('$tahun', '$nominal')");
+  $tambah->execute();
   if ($tambah) {
     header('location:../petugas?page=spp');
   } else {
@@ -24,7 +23,8 @@ if (!empty($_GET['aksi'] == 'tambah')) {
 //hapus data
 if (!empty($_GET['aksi'] == 'delete')) {
   $id = $_POST['id'];
-  $hapus = $prosesData->hapusData("spp", "id_spp", $id);
+  $hapus = $dbConnect->prepare("CALL hapusSpp($id)");
+  $hapus->execute();
   if ($hapus) {
     header('location:../petugas?page=spp');
   } else {
@@ -34,13 +34,12 @@ if (!empty($_GET['aksi'] == 'delete')) {
 
 // untuk mengubah data
 if (!empty($_GET['aksi'] == 'ubah')) {
-  $data = array(
-    'tahun' => $_POST['tahun'],
-    'nominal' => $_POST['nominal']
-  );
+  $tahun = $_POST['tahun'];
+  $nominal = $_POST['nominal'];
 
-  $tambah = $prosesData->ubahData("spp", $data, "id_spp", $_POST['id']);
-  if ($tambah) {
+  $update = $dbConnect->prepare("CALL updateSpp('$tahun', '$nominal')");
+  $update->execute();
+  if ($update) {
     header('location:../petugas?page=spp');
   } else {
     echo "Gagal ubah data";

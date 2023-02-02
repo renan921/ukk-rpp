@@ -17,7 +17,11 @@
             <th>Aksi</th>
           </thead>
           <tbody>
-            <?php foreach($prosesData->tampilData('spp') as $no=>$data): ?>
+            <?php
+            $spp = $dbConnect->prepare("CALL getSpp()");
+            $spp->execute();
+            ?>
+            <?php foreach($spp->fetchAll() as $no=>$data): ?>
               <tr>
                 <td><?= $no+1 ?></td>
                 <td><?= $data['tahun'] ?></td>

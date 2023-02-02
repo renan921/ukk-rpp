@@ -17,7 +17,11 @@
             <th>Aksi</th>
           </thead>
           <tbody>
-            <?php foreach($prosesData->tampilData('kelas') as $no=>$data): ?>
+            <?php
+            $semuaKelas = $dbConnect->prepare("CALL getKelas()");
+            $semuaKelas->execute();
+            ?>
+            <?php foreach($semuaKelas->fetchAll() as $no=>$data): ?>
               <tr>
                 <td><?= $no+1 ?></td>
                 <td><?= $data['nama_kelas'] ?></td>

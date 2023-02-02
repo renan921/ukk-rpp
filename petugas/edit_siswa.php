@@ -3,7 +3,12 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <?php $data = $prosesData->tampilDataId('siswa', 'nisn', $_GET['id']) ?>
+        <?php
+        $id = $_GET['id'];
+        $siswa = $dbConnect->prepare("CALL getSiswaId('$id'); CALL getKelas()");
+        $siswa->execute();
+        $data = $siswa->fetch();
+        ?>
         <form action="../controllers/siswaController.php?aksi=ubah" method="post">
           <div class="form-group mb-2">
             <input type="text" name="nisn" value="<?= $data['nisn'] ?>" class="form-control" placeholder="NISN">
@@ -25,7 +30,12 @@
           </div>
           <div class="form-group mb-2">
             <select name="id_kelas" class="form-control" required>
-              <?php foreach($prosesData->tampilData("kelas") as $kelas):  ?>
+              <?php
+              $siswa->nextRowset();
+              $siswa->nextRowset();
+              $kelasData = $siswa->fetchAll();
+              ?>
+              <?php foreach($kelasData as $kelas):  ?>
               <option value="<?= $kelas['id_kelas'] ?>" <?= $data['id_kelas'] != $kelas['id_kelas'] ?: 'selected' ?> >
                 <?= $kelas['nama_kelas'] ?>
               </option>
